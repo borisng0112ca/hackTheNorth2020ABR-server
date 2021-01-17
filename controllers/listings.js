@@ -38,7 +38,7 @@ async function createListing (req, res){
   const listing = req.body;
   const mapData = await geocoder.geocode(req.body.address);
  
-  const newListing = new ListingModel({...listing, coordinates:[mapData[0]['latitude'],mapData[0]['longitude']], listingUserId: req.userId, date: new Date().toISOString()});
+  const newListing = new ListingModel({...listing, coordinates:[mapData[0]['latitude'],mapData[0]['longitude']], listingId: _id, listingUserId: req.userId, date: new Date().toISOString()});
 
   try{
     await newListing.save();

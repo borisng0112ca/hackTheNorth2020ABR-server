@@ -12,6 +12,8 @@ const listingSchema = new mongoose.Schema(
     images: [String],
     coordinates: [Number],
     listingUserId: String,
+    listingId: String,
+    payRate: String,
     date: {
       type: Date,
       default: new Date(),
