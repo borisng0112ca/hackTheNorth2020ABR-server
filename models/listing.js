@@ -9,8 +9,8 @@ const listingSchema = new mongoose.Schema(
     area: Number,
     numBathrooms: Number,
     numBedrooms: Number,
-    coordinates: [Number],
     images: [String],
+    coordinates: [Number],
     listingUserId: String,
     date: {
       type: Date,

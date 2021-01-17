@@ -1,3 +1,7 @@
+const path = require('path')
+require('dotenv').config({ path: path.resolve(__dirname, '/config.env') });
+const NodeGeocoder = require('node-geocoder');
+
 const ListingModel = require('../models/listing');
 
 async function getAllListings (req, res){
@@ -12,7 +16,7 @@ async function getAllListings (req, res){
 
 async function getUserListings (req, res){
 
-  const userId = req.params;
+  const {userId} = req.params;
 
   try{
     const listings = await ListingModel.find({listingUserId: userId});
@@ -24,10 +28,17 @@ async function getUserListings (req, res){
 }
 
 async function createListing (req, res){
+
+  const geocoder = NodeGeocoder({
+    provider: 'google',
+    apiKey: process.env.GOOGLE_API,
+    formatter: null, 
+  });
   
   const listing = req.body;
-
-  const newListing = new ListingModel({...listing, listingUserId: req.userId, date: new Date().toISOString()});
+  const mapData = await geocoder.geocode(req.body.address);
+ 
+  const newListing = new ListingModel({...listing, coordinates:[mapData[0]['latitude'],mapData[0]['longitude']], listingUserId: req.userId, date: new Date().toISOString()});
 
   try{
     await newListing.save();

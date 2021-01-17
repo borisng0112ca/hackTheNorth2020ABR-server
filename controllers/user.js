@@ -7,6 +7,8 @@ const secret = 'hackthenorth2020abr';
 
 async function login (req, res){
 
+  console.log(req.body);
+  
   const email = req.body.email;
   const password = req.body.password;
 
@@ -29,6 +31,8 @@ async function login (req, res){
 }
 
 async function register (req, res){
+
+  console.log(req.body);
 
   const email = req.body.email;
   const password = req.body.password;
